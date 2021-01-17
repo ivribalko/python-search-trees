@@ -14,3 +14,6 @@ data = tree.BinaryTree(root=tree.Node(root))
 
 for item in generate_numbers(count=10):
     data.add(tree.Node(item))
+
+for item in data:
+    print(item)

@@ -29,12 +29,36 @@ class Node:
         self._right = value
 
 
+class TreeIterator:
+    def __init__(self, tree: 'BinaryTree'):
+        self._tree = tree
+
+    def __next__(self):
+        def _next(node):
+            yield node
+            if node.left is not None:
+                _next(node.left)
+            elif node.right is not None:
+                _next(node.right)
+            else:
+                raise StopIteration
+
+        _next(self._tree.root)
+
+
 class BinaryTree:
     def __init__(self, root: Node):
         self._root = root
 
+    def __iter__(self) -> TreeIterator:
+        return TreeIterator(self)
+
+    @property
+    def root(self):
+        return self._root
+
     def add(self, node: Node) -> None:
-        _add_recursive(parent=self._root, new_node=node)
+        _add_recursive(parent=self.root, new_node=node)
 
 
 def _add_recursive(parent: Node, new_node: Node) -> None:
